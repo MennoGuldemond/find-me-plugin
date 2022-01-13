@@ -2,10 +2,13 @@ package me.mennoguldemond.findme.managers;
 
 import me.mennoguldemond.findme.BlockGenerator;
 import me.mennoguldemond.findme.FindMe;
+import me.mennoguldemond.findme.models.CursedBlocks;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+
+import java.util.Random;
 
 public class GameManager {
     private int countdownTimer;
@@ -44,13 +47,12 @@ public class GameManager {
 
     public void sendDayMessage(Player player) {
         int day = Math.round(this.findMe.getServer().getWorld("world").getFullTime() / 24000);
-        player.sendTitle(ChatColor.LIGHT_PURPLE + "Day " + day, ChatColor.WHITE + "The cursed block of today is: " + ChatColor.RED + this.findMe.dataManager.gameData.cursedBlock);
+        player.sendTitle(ChatColor.LIGHT_PURPLE + "Day " + day, ChatColor.WHITE + "Be careful, " + ChatColor.RED + this.findMe.dataManager.gameData.cursedBlock + ChatColor.WHITE + " is cursed today!");
     }
 
     private void countDays() {
         Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this.findMe, () -> {
             long currentTime = this.findMe.getServer().getWorld("world").getTime();
-            Bukkit.getLogger().info("" + currentTime);
             if (currentTime <= lastTimeDayChange) {
                 lastTimeDayChange = currentTime + 19;
                 this.handleDayChange();
@@ -85,7 +87,7 @@ public class GameManager {
     }
 
     private String randomCurseBlock() {
-        return "DIRT";
+        return CursedBlocks.blocks[new Random().nextInt(CursedBlocks.blocks.length)];
     }
 
 }

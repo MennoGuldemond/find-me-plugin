@@ -21,7 +21,7 @@ public class BreakEvents implements Listener {
         if (this.findMe.playerManager.readyPlayers.contains(player)) {
             event.setCancelled(true);
         } else if (event.getBlock().getType().name().equals(this.findMe.dataManager.gameData.cursedBlock)) {
-            player.getWorld().createExplosion(player.getLocation(), 10, true, true);
+            player.getWorld().createExplosion(player.getLocation(), 6, false, true);
         }
         Bukkit.getLogger().info(event.getBlock().getType().name() + " VS " + this.findMe.dataManager.gameData.cursedBlock);
     }
