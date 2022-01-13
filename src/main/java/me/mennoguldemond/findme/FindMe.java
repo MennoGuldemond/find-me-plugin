@@ -26,7 +26,7 @@ public final class FindMe extends JavaPlugin {
         this.gameManager = new GameManager(this);
 
         getServer().getPluginManager().registerEvents(new ConnectionEvents(this), this);
-        getServer().getPluginManager().registerEvents(new BreakEvents(this.playerManager), this);
+        getServer().getPluginManager().registerEvents(new BreakEvents(this), this);
         getServer().getPluginManager().registerEvents(new AdvancementEvents(this.playerManager), this);
 
         getServer().getPluginCommand("ready").setExecutor(new ReadyCommand(this));

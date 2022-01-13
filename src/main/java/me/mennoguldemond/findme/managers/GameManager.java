@@ -8,18 +8,17 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 public class GameManager {
-    public boolean isTowerBuild;
     private int countdownTimer;
+    private long lastTimeDayChange = 24000;
 
     private final FindMe findMe;
 
     public GameManager(FindMe findMe) {
         this.findMe = findMe;
-        this.isTowerBuild = this.findMe.dataManager.gameData.isTowerBuild;
+        this.countDays();
     }
 
     public void start() {
-        // Start countdown
         this.countdownTimer = Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this.findMe, new Runnable() {
                     int i = 7;
 
@@ -43,12 +42,29 @@ public class GameManager {
                 , 0L, 20L);
     }
 
+    public void sendDayMessage(Player player) {
+        int day = Math.round(this.findMe.getServer().getWorld("world").getFullTime() / 24000);
+        player.sendTitle(ChatColor.LIGHT_PURPLE + "Day " + day, ChatColor.WHITE + "The cursed block of today is: " + ChatColor.RED + this.findMe.dataManager.gameData.cursedBlock);
+    }
+
+    private void countDays() {
+        Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(this.findMe, () -> {
+            long currentTime = this.findMe.getServer().getWorld("world").getTime();
+            Bukkit.getLogger().info("" + currentTime);
+            if (currentTime <= lastTimeDayChange) {
+                lastTimeDayChange = currentTime + 19;
+                this.handleDayChange();
+            }
+        }
+        , 0L, 20L);
+    }
+
     private void setGameValues() {
         Bukkit.getScheduler().cancelTask(this.countdownTimer);
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule reducedDebugInfo true");
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spreadplayers 0 0 800 1200 false @a");
 
-        if (!this.isTowerBuild) {
+        if (!this.findMe.dataManager.gameData.isTowerBuild) {
             BlockGenerator.CreateHomeTower(Bukkit.getWorlds().get(0));
         }
 
@@ -58,6 +74,18 @@ public class GameManager {
         for (World world : Bukkit.getServer().getWorlds()) {
             world.setTime(0);
         }
+    }
+
+    private void handleDayChange() {
+        Bukkit.getLogger().info("handleDayChange() was run");
+        this.findMe.dataManager.gameData.cursedBlock = this.randomCurseBlock();
+        for (Player player:this.findMe.getServer().getOnlinePlayers()) {
+            this.sendDayMessage(player);
+        }
+    }
+
+    private String randomCurseBlock() {
+        return "DIRT";
     }
 
 }

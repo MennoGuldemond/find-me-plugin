@@ -1,6 +1,7 @@
 package me.mennoguldemond.findme.events;
 
-import me.mennoguldemond.findme.managers.PlayerManager;
+import me.mennoguldemond.findme.FindMe;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,18 +9,21 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class BreakEvents implements Listener {
 
-    PlayerManager playerManager;
+    FindMe findMe;
 
-    public BreakEvents(PlayerManager playerManager) {
-        this.playerManager = playerManager;
+    public BreakEvents(FindMe findMe) {
+        this.findMe = findMe;
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         Player player = event.getPlayer();
-        if (playerManager.readyPlayers.contains(player)) {
+        if (this.findMe.playerManager.readyPlayers.contains(player)) {
             event.setCancelled(true);
+        } else if (event.getBlock().getType().name().equals(this.findMe.dataManager.gameData.cursedBlock)) {
+            player.getWorld().createExplosion(player.getLocation(), 10, true, true);
         }
+        Bukkit.getLogger().info(event.getBlock().getType().name() + " VS " + this.findMe.dataManager.gameData.cursedBlock);
     }
 
 }

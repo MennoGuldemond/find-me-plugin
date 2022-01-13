@@ -9,12 +9,10 @@ import java.util.ArrayList;
 public class PlayerManager {
     private final FindMe findMe;
 
-    private ArrayList<PlayerData> playerData;
     public ArrayList<Player> readyPlayers = new ArrayList<>();
 
     public PlayerManager(FindMe findMe) {
         this.findMe = findMe;
-        this.playerData = this.findMe.dataManager.gameData.playerData;
     }
 
     public void readyPlayer(Player player) {
@@ -26,14 +24,14 @@ public class PlayerManager {
     }
 
     public void handlePlayerJoin(Player player) {
-        if(this.playerData.stream().noneMatch(p -> p.id.equals(player.getUniqueId()))) {
+        if(this.findMe.dataManager.gameData.playerData.stream().noneMatch(p -> p.id.equals(player.getUniqueId()))) {
             PlayerData data = new PlayerData(player.getUniqueId());
-            playerData.add(data);
+            this.findMe.dataManager.gameData.playerData.add(data);
         }
     }
 
     public PlayerData getPlayerData(Player player) {
-        return playerData.stream().filter(p -> p.id.equals(player.getUniqueId())).findFirst().orElse(null);
+        return this.findMe.dataManager.gameData.playerData.stream().filter(p -> p.id.equals(player.getUniqueId())).findFirst().orElse(null);
     }
 
     public void clearReadyPlayers() {

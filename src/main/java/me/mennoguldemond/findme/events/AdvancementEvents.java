@@ -26,7 +26,7 @@ public class AdvancementEvents implements Listener {
                 playerData.score += 2;
                 player.sendMessage("§6You gained §2" + 1 + " §6Jos!");
             } else {
-                Bukkit.getLogger().warning("PlayerData was null when trying to add Jos in [onAdvancement]");
+                Bukkit.getLogger().warning("PlayerData was null in [AdvancementEvents.onAdvancement]");
             }
         }
     }

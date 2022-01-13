@@ -23,6 +23,7 @@ public class ConnectionEvents implements Listener {
         player.sendMessage(ChatColor.BLUE + "Welcome to Find me. Type /ready when you want to start the game.");
         this.findMe.playerManager.handlePlayerJoin(player);
         this.findMe.dataManager.saveData();
+        this.findMe.gameManager.sendDayMessage(player);
     }
 
     @EventHandler
