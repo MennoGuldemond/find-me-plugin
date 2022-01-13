@@ -1,0 +1,17 @@
+name: Findme
+version: '${project.version}'
+main: me.mennoguldemond.findme.FindMe
+api-version: 1.18
+authors: [ MennoGuldemond ]
+description: A Plugin for a finding other players game
+website: https://github.com/MennoGuldemond
+commands:
+  ready:
+    description: Set's a player to be ready for the game.
+    usage: /<command>
+  start:
+    description: Starts the game.
+    usage: /<command>
+  jos:
+    description: shows you how much jos currency you have.
+    usage: /<command>
