@@ -21,6 +21,10 @@ public class ReadyCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
+
+            if (this.findMe.playerManager.readyPlayers.contains(player)) {
+                return true;
+            }
             this.findMe.playerManager.readyPlayer(player);
 
             int xOffset = this.findMe.playerManager.readyPlayers.size() * 6;
