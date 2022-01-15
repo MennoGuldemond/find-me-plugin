@@ -1,7 +1,6 @@
 package me.mennoguldemond.findme.events;
 
 import me.mennoguldemond.findme.FindMe;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +22,6 @@ public class BreakEvents implements Listener {
         } else if (event.getBlock().getType().name().equals(this.findMe.dataManager.gameData.cursedBlock)) {
             player.getWorld().createExplosion(player.getLocation(), 6, false, true);
         }
-        Bukkit.getLogger().info(event.getBlock().getType().name() + " VS " + this.findMe.dataManager.gameData.cursedBlock);
     }
 
 }

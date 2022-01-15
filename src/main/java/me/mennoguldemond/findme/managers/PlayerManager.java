@@ -25,7 +25,7 @@ public class PlayerManager {
 
     public void handlePlayerJoin(Player player) {
         if(this.findMe.dataManager.gameData.playerData.stream().noneMatch(p -> p.id.equals(player.getUniqueId()))) {
-            PlayerData data = new PlayerData(player.getUniqueId());
+            PlayerData data = new PlayerData(player.getUniqueId(), player.getLocation());
             this.findMe.dataManager.gameData.playerData.add(data);
         }
     }

@@ -1,7 +1,5 @@
 package me.mennoguldemond.findme.models;
 
-import org.bukkit.block.Block;
-
 import java.util.ArrayList;
 
 public class GameData {

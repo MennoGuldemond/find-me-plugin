@@ -6,6 +6,7 @@ import me.mennoguldemond.findme.commands.StartCommand;
 import me.mennoguldemond.findme.events.AdvancementEvents;
 import me.mennoguldemond.findme.events.BreakEvents;
 import me.mennoguldemond.findme.events.ConnectionEvents;
+import me.mennoguldemond.findme.events.LifecycleEvents;
 import me.mennoguldemond.findme.managers.DataManager;
 import me.mennoguldemond.findme.managers.GameManager;
 import me.mennoguldemond.findme.managers.PlayerManager;
@@ -28,6 +29,7 @@ public final class FindMe extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ConnectionEvents(this), this);
         getServer().getPluginManager().registerEvents(new BreakEvents(this), this);
         getServer().getPluginManager().registerEvents(new AdvancementEvents(this.playerManager), this);
+        getServer().getPluginManager().registerEvents(new LifecycleEvents(this), this);
 
         getServer().getPluginCommand("ready").setExecutor(new ReadyCommand(this));
         getServer().getPluginCommand("start").setExecutor(new StartCommand(this));

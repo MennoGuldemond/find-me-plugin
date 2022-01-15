@@ -8,6 +8,8 @@ public class CursedBlocks {
             "SANDSTONE",
             "DEEPSLATE",
             "GRAVEL",
-            "NETHERRACK"
+            "NETHERRACK",
+            "STONE",
+            "OAK_LOG"
     };
 }

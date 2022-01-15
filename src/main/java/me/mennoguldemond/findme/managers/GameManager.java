@@ -3,8 +3,10 @@ package me.mennoguldemond.findme.managers;
 import me.mennoguldemond.findme.BlockGenerator;
 import me.mennoguldemond.findme.FindMe;
 import me.mennoguldemond.findme.models.CursedBlocks;
+import me.mennoguldemond.findme.models.Vector3;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -46,7 +48,7 @@ public class GameManager {
     }
 
     public void sendDayMessage(Player player) {
-        int day = Math.round(this.findMe.getServer().getWorld("world").getFullTime() / 24000);
+        int day = Math.round(this.findMe.getServer().getWorld("world").getFullTime() / 24000F);
         player.sendTitle(ChatColor.LIGHT_PURPLE + "Day " + day, ChatColor.WHITE + "Be careful, " + ChatColor.RED + this.findMe.dataManager.gameData.cursedBlock + ChatColor.WHITE + " is cursed today!");
     }
 
@@ -70,12 +72,18 @@ public class GameManager {
             BlockGenerator.CreateHomeTower(Bukkit.getWorlds().get(0));
         }
 
-        this.findMe.playerManager.clearReadyPlayers();
-
         // Reset time
         for (World world : Bukkit.getServer().getWorlds()) {
             world.setTime(0);
         }
+
+        for (Player player: this.findMe.playerManager.readyPlayers) {
+            Location location = player.getLocation();
+            this.findMe.playerManager.getPlayerData(player).spawnLocation = new Vector3(location.getX(), location.getY(), location.getZ());
+        }
+
+        this.findMe.dataManager.saveData();
+        this.findMe.playerManager.clearReadyPlayers();
     }
 
     private void handleDayChange() {
